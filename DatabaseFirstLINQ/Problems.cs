@@ -22,7 +22,7 @@ namespace DatabaseFirstLINQ
             //ProblemFive();
             //ProblemSix();
             //ProblemSeven();
-            //ProblemEight();
+            ProblemEight();
             //ProblemNine();
             //ProblemTen();
             //ProblemEleven();
@@ -49,7 +49,7 @@ namespace DatabaseFirstLINQ
         private void ProblemTwo()
         {
             // Write a LINQ query that retrieves the users from the User tables then print each user's email to the console.
-            var users = _context.Users;
+            var users = _context.Users.ToList();
 
             foreach (User user in users)
             {
@@ -99,10 +99,10 @@ namespace DatabaseFirstLINQ
         {
             // Write a LINQ query that gets all of the users who registered AFTER 2016 and BEFORE 2018
             // Then print each user's email and registration date to the console.
-            var users = _context.Users;
+            
             var Jan2016 = new DateTime(2016, 1, 1, 0, 0, 0);
             var Jan2018 = new DateTime(2018, 1, 1, 0, 0, 0);
-            var certainusers = users.Where(u => u.RegistrationDate > Jan2016 & u.RegistrationDate < Jan2018);
+            var certainusers = _context.Users.Where(u => u.RegistrationDate > Jan2016 & u.RegistrationDate < Jan2018);
             foreach(var user in certainusers)
             {
                 Console.WriteLine(user.Email + " " + user.RegistrationDate);
@@ -126,7 +126,14 @@ namespace DatabaseFirstLINQ
         {
             // Write a LINQ query that retreives all of the products in the shopping cart of the user who has the email "afton@gmail.com".
             // Then print the product's name, price, and quantity to the console.
-
+            //var emailofuser = _context.Users.Include(eou => eou.Email).Include(eou => eou.ShoppingCarts).Where(eou => eou.Email == "afton@gmail.com");
+            //Console.WriteLine(emailofuser.ShoppingCart);
+            var usercart = _context.ShoppingCarts.Include(uc => uc.Product).Where(uc => uc.User.Email == "afton@gmail.com");
+            Console.WriteLine(usercart);
+            foreach (ShoppingCart shoppingCart in usercart)
+            {
+                Console.WriteLine($"Product Name: {shoppingCart.Product.Name} Product Price: {shoppingCart.Product.Price} Product Quantity: {shoppingCart.Quantity}");
+            }
         }
 
         private void ProblemNine()
