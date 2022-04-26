@@ -152,11 +152,18 @@ namespace DatabaseFirstLINQ
 
             var customerUsers = _context.UserRoles.Include(ur => ur.Role).Where(ur => ur.Role.RoleName == "Employee").Select(ur => ur.UserId);
             var userCart = _context.ShoppingCarts.Include(sc => sc.User).Include(sc => sc.Product).Where(sc => customerUsers.Contains(sc.UserId));
-            // <><><><><><><><> CUD (Create, Update, Delete) Actions <><><><><><><><><>
+            foreach (var item in userCart)
+            {
+                Console.WriteLine($"Email: {item.User.Email} Name: {item.Product.Name} Price: {item.Product.Price} Quantity: {item.Quantity}");
+            }
 
-            // <><> C Actions (Create) <><>
 
-            private void ProblemEleven()
+        }
+        // <><><><><><><><> CUD (Create, Update, Delete) Actions <><><><><><><><><>
+
+        // <><> C Actions (Create) <><>
+
+        private void ProblemEleven()
         {
             // Create a new User object and add that user to the Users table using LINQ.
             User newUser = new User()
