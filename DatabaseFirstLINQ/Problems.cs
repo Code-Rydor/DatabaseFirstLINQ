@@ -34,7 +34,7 @@ namespace DatabaseFirstLINQ
             //ProblemSeventeen();
             //ProblemEighteen();
             //ProblemNineteen();
-            ProblemTwenty();
+            //ProblemTwenty();
         }
 
         // <><><><><><><><> R Actions (Read) <><><><><><><><><>
@@ -150,28 +150,12 @@ namespace DatabaseFirstLINQ
             // Write a LINQ query that retreives all of the products in the shopping cart of users who have the role of "Employee".
             // Then print the user's email as well as the product's name, price, and quantity to the console.
 
-            //var employeeUsers = _context.UserRoles.Include(er => er.Role).Include(er => er.User).Where(er => er.Role.RoleName == "Employee");
-            //foreach (UserRole userRole in employeeUsers)
-            //{
-            //    var usercart = _context.ShoppingCarts.Include(uc => uc.Product);
-            //    foreach (ShoppingCart shoppingCart in usercart)
-            //    {
-            //        if (userRole.User.Id == shoppingCart.User.Id)
-            //        Console.WriteLine($"Email: {shoppingCart.User.Email} Product Name: {shoppingCart.Product.Name} Product Price: ${shoppingCart.Product.Price} Quantity In Cart: {shoppingCart.Quantity}");
-            //    }
-            //}
-            //foreach (ShoppingCart shoppingCart in usercart)
-            //{
-            //    Console.WriteLine($"Email: {shoppingCart.User.Email} Product Name: {shoppingCart.Product.Name} Product Price: ${shoppingCart.Product.Price} Quantity In Cart: {shoppingCart.Quantity}");
-            //}
+            var customerUsers = _context.UserRoles.Include(ur => ur.Role).Where(ur => ur.Role.RoleName == "Employee").Select(ur => ur.UserId);
+            // <><><><><><><><> CUD (Create, Update, Delete) Actions <><><><><><><><><>
 
-        }
+            // <><> C Actions (Create) <><>
 
-        // <><><><><><><><> CUD (Create, Update, Delete) Actions <><><><><><><><><>
-
-        // <><> C Actions (Create) <><>
-
-        private void ProblemEleven()
+            private void ProblemEleven()
         {
             // Create a new User object and add that user to the Users table using LINQ.
             User newUser = new User()
